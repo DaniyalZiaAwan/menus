@@ -1,4 +1,5 @@
 /* eslint-disable  @typescript-eslint/no-explicit-any */
+
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from '../utils/axiosInstance';
 
@@ -56,11 +57,9 @@ const menuSlice = createSlice({
         }
       })
       .addCase(addMenu.fulfilled, (state, action) => {
-        const newMenu = action.payload;
         state.menuForm = {}
       })
       .addCase(updateMenu.fulfilled, (state, action) => {
-        const updatedMenu = action.payload;
         state.menuForm = {}
       })
   },
