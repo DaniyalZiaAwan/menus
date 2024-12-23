@@ -56,10 +56,10 @@ const menuSlice = createSlice({
           if(newMenu) state.selectedMenu = [newMenu];
         }
       })
-      .addCase(addMenu.fulfilled, (state, action) => {
+      .addCase(addMenu.fulfilled, (state) => {
         state.menuForm = {}
       })
-      .addCase(updateMenu.fulfilled, (state, action) => {
+      .addCase(updateMenu.fulfilled, (state) => {
         state.menuForm = {}
       })
   },
