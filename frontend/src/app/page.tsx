@@ -13,7 +13,7 @@ import {
 } from "./redux/menuSlice";
 import MenuForm from "./components/MenuForm";
 
-const Home: React.FC<void> = () => {
+const Home: React.FC<any> = () => {
   const [globalExpand, setGlobalExpand] = useState(false); // For expand/collapse all
 
   const dispatch = useAppDispatch();
