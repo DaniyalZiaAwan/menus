@@ -10,7 +10,7 @@ interface MenuFormProps {
 
 const MenuForm: React.FC<MenuFormProps> = ({ onSaveMenu }) => {
   const selectedMenu = useAppSelector((state) => state.menu.selectedMenu);
-  const menuForm: any = useAppSelector((state) => state.menu.menuForm);
+  const menuForm = useAppSelector((state) => state.menu.menuForm);
   const dispatch = useAppDispatch();
   const handleInputChange = (field: string, value: any) => {
     dispatch(setMenuForm({ ...menuForm, [field]: value }));
@@ -29,7 +29,7 @@ const MenuForm: React.FC<MenuFormProps> = ({ onSaveMenu }) => {
       <div>
         <InputField
           label="Depth"
-          value={menuForm?.depth || ""}
+          value={menuForm?.depth || menuForm?.depth == 0 && '0' || ''}
           onChange={(value) => handleInputChange("depth", value)}
           readOnly={true}
         />
@@ -49,12 +49,20 @@ const MenuForm: React.FC<MenuFormProps> = ({ onSaveMenu }) => {
           onChange={(value) => handleInputChange("name", value)}
         />
       </div>
-      <button
-        onClick={onSaveMenu}
-        className="bg-primary-blue text-white font-bold px-4 py-2 rounded-full w-full lg:w-40 mt-4"
-      >
-        {selectedMenu?.length || menuForm?.id ? "Save" : "Create"}
-      </button>
+      <div className="flex">
+        <button
+          onClick={onSaveMenu}
+          className="bg-primary-blue text-white font-bold px-4 py-2 rounded-full w-full lg:w-32 mt-4"
+        >
+          {selectedMenu?.length || menuForm?.id ? "Save" : "Create"}
+        </button>
+        {(!!menuForm?.id || !!menuForm?.parentId) && <button
+          onClick={() => dispatch(setMenuForm({}))}
+          className="bg-red-400 text-white font-bold px-4 py-2 rounded-full w-full lg:w-32 mt-4 ml-2"
+        >
+          Cancel
+        </button>}
+      </div>
     </div>
   );
 };

@@ -1,5 +1,4 @@
 /* eslint-disable  @typescript-eslint/no-explicit-any */
-
 "use client";
 import { useEffect, useState } from "react";
 import DropdownSelect from "./components/DropdownSelect";
@@ -15,7 +14,7 @@ import {
 } from "./redux/menuSlice";
 import MenuForm from "./components/MenuForm";
 
-const Home: React.FC<any> = () => {
+const Home: React.FC<void> = () => {
   const [globalExpand, setGlobalExpand] = useState(false); // For expand/collapse all
 
   const dispatch = useAppDispatch();
@@ -86,25 +85,25 @@ const Home: React.FC<any> = () => {
               Collapse All
             </button>
           </div>
-          <div className="my-6">
-            {selectedMenu.map((node, index) => (
-              <TreeNode
-                key={index}
-                node={node}
-                globalExpand={globalExpand}
-                onEdit={handleEditNode}
-                onDelete={handleDeleteNode}
-                onAdd={handleAddNode}
-              />
-            ))}
-          </div>
+          {!!selectedMenu?.length && (
+            <div className="my-6">
+              {selectedMenu.map((node, index) => (
+                <TreeNode
+                  key={index}
+                  node={node}
+                  globalExpand={globalExpand}
+                  onEdit={handleEditNode}
+                  onDelete={handleDeleteNode}
+                  onAdd={handleAddNode}
+                />
+              ))}
+            </div>
+          )}
         </aside>
 
         {/* Detail Panel */}
         <main className="lg:min-w-[400px] lg:ml-32 bg-white p-4 rounded-lg">
-          <MenuForm
-            onSaveMenu={onSaveMenu}
-          />
+          <MenuForm onSaveMenu={onSaveMenu} />
         </main>
       </div>
     </div>

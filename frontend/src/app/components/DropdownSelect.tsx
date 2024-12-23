@@ -1,13 +1,11 @@
 /* eslint-disable  @typescript-eslint/no-explicit-any */
 
 import { useState, useEffect, useRef } from "react";
-
 interface DropdownSelectProps {
   options: any[]; // Array of options
   defaultValue?: string; // Optional default value
   onChange?: (selected: any) => void; // Callback function for selected value
 }
-
 const DropdownSelect: React.FC<DropdownSelectProps> = ({
   options,
   defaultValue = "",
@@ -16,13 +14,11 @@ const DropdownSelect: React.FC<DropdownSelectProps> = ({
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [selected, setSelected] = useState<string>(defaultValue);
   const dropdownRef = useRef<HTMLDivElement>(null); // Ref for the dropdown container
-
   const handleSelect = (option: any) => {
     setSelected(option.name);
     setIsOpen(false);
     if (onChange) onChange(option); // Trigger onChange callback if provided
   };
-
   // Close dropdown when clicking outside
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -33,13 +29,14 @@ const DropdownSelect: React.FC<DropdownSelectProps> = ({
         setIsOpen(false);
       }
     };
-
     document.addEventListener("mousedown", handleClickOutside);
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
-
+  useEffect(() => {
+    !options?.length && setSelected("Select Menu")
+  }, [options])
   return (
     <div className="relative w-full" ref={dropdownRef}>
       {/* Selected Item */}
@@ -66,9 +63,8 @@ const DropdownSelect: React.FC<DropdownSelectProps> = ({
           />
         </svg>
       </button>
-
       {/* Dropdown Menu */}
-      {isOpen && (
+      {isOpen && !!options?.length && (
         <ul className="absolute w-full mt-2 bg-white border border-gray-300 rounded-lg shadow-lg z-10">
           {options.map((option, index) => (
             <li
@@ -84,5 +80,4 @@ const DropdownSelect: React.FC<DropdownSelectProps> = ({
     </div>
   );
 };
-
 export default DropdownSelect;
