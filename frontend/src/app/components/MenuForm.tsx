@@ -10,7 +10,7 @@ interface MenuFormProps {
 
 const MenuForm: React.FC<MenuFormProps> = ({ onSaveMenu }) => {
   const selectedMenu = useAppSelector((state) => state.menu.selectedMenu);
-  const menuForm = useAppSelector((state) => state.menu.menuForm);
+  const menuForm: any = useAppSelector((state) => state.menu.menuForm);
   const dispatch = useAppDispatch();
   const handleInputChange = (field: string, value: any) => {
     dispatch(setMenuForm({ ...menuForm, [field]: value }));
